@@ -89,12 +89,13 @@ class MockWindow extends MockNode
 
   setTimeout: (callback, delay) ->
     @timeouts.push
-      delay: @currentTime + delay
+      runAt: @currentTime + delay
       callback: callback
 
   setInterval: (callback, delay) ->
     @intervals.push
-      delay: @currentTime + delay
+      delay: delay
+      runAt: @currentTime + delay
       callback: callback
 
   clearTimeout: (index) ->
@@ -105,17 +106,20 @@ class MockWindow extends MockNode
     if interval = @intervals[index - 1]
       interval.cleared = true
 
-  tick: (delay) ->
-    @currentTime += delay
+  tick: (ms) ->
+    for [1..ms]
+      @currentTime += 1
 
-    for timeout in @timeouts
-      unless timeout.callbacked || timeout.cleared
-        if @currentTime >= timeout.delay
-          timeout.callback()
-          timeout.callbacked = true
+      for interval in @intervals
+        unless interval.cleared
+          if interval.runAt == @currentTime
+            interval.callback()
+            interval.runAt = @currentTime + interval.delay
 
-    for interval in @intervals
-      if @currentTime >= interval.delay
-        interval.callback() unless interval.cleared
+      for timeout in @timeouts
+        unless timeout.callbacked || timeout.cleared
+          if timeout.runAt == @currentTime
+            timeout.callback()
+            timeout.callbacked = true
 
 module.exports = {MockWindow, MockDocument, MockNode, MockLocation}

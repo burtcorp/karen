@@ -90,9 +90,7 @@ describe 'MockWindow', ->
       count = 0
       doneCheck = -> done() if (++count) >= 3
       @window.setInterval(doneCheck, 100)
-      @window.tick(100)
-      @window.tick(100)
-      @window.tick(100)
+      @window.tick(300)
 
     it 'does not run callback if delay has not passed', (done) ->
       @window.setInterval ->
@@ -104,7 +102,7 @@ describe 'MockWindow', ->
     it 'runs multiple callbacks', (done) ->
       count = 0
       doneCheck = ->
-        done() if (++count) >= 2
+        done() if (++count) >= 3
       @window.setInterval(doneCheck, 50)
       @window.setInterval(doneCheck, 100)
       @window.tick(100)
@@ -129,3 +127,19 @@ describe 'MockWindow', ->
       @window.tick(100)
       @window.clearInterval(interval)
       @window.tick(100)
+
+  it 'runs timeouts and intervals in correct order', (done) ->
+    timeoutDone = false
+
+    @window.setTimeout ->
+      timeoutDone = true
+    , 50
+
+    @window.setInterval ->
+      if timeoutDone
+        done()
+      else
+        done('timeout was already done, but should not have been')
+    , 100
+
+    @window.tick(100)

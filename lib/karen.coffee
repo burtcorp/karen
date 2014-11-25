@@ -6,9 +6,8 @@ class MockNode extends Evented
   constructor: (@type) ->
     super
 
-    if @type && @type.toLowerCase() == 'iframe'
-      @__defineGetter__ 'contentWindow', ->
-        new MockWindow
+    if @type?.toLowerCase() == 'iframe'
+      @contentWindow = new MockWindow
 
   addEventListener: (event, listener) ->
     @on(event, listener)
@@ -57,8 +56,7 @@ class MockDocument extends MockNode
 
       @emit 'cookie', key, value, {path, domain} = cookies[key]
 
-    @__defineGetter__ 'body', ->
-      new MockNode
+    @body = new MockNode('body')
 
 class MockWindow extends MockNode
   constructor: ->
@@ -72,11 +70,8 @@ class MockWindow extends MockNode
       log: (args...) =>
         @emit 'console-log', args...
 
-    @__defineGetter__ 'document', ->
-      new MockDocument
-
-    @__defineGetter__ 'location', ->
-      new MockLocation
+    @document = new MockDocument
+    @location = new MockLocation
 
   postMessage: (data, origin) ->
     @emit 'message',

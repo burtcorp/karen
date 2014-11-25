@@ -3,31 +3,31 @@
 describe 'MockNode', ->
   def 'node', -> new MockNode
 
-  describe 'addEventListener', ->
+  describe '#addEventListener', ->
     it 'callbacks on event', (done) ->
       @node.addEventListener('event', done)
       @node.emit 'event'
 
-  describe 'removeEventListener', ->
+  describe '#removeEventListener', ->
     it 'removes event listeners', (done) ->
       @node.addEventListener('event', done)
       @node.removeEventListener('event', done)
       @node.emit 'event'
       done()
 
-  describe 'attachEvent', ->
+  describe '#attachEvent', ->
     it 'callbacks on event', (done) ->
       @node.attachEvent('event', done)
       @node.emit 'event'
 
-  describe 'detachEvent', ->
+  describe '#detachEvent', ->
     it 'removes event listeners', (done) ->
       @node.attachEvent('event', done)
       @node.detachEvent('event', done)
       @node.emit 'event'
       done()
 
-  describe 'style', ->
+  describe '#style', ->
     it 'allows for read/write styles', ->
       @node.style.background = 'red';
       @node.style.background.should.equal('red')

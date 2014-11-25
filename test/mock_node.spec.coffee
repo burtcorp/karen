@@ -1,4 +1,4 @@
-MockNode = require('../lib/mock_node')
+{MockNode} = require('../lib/karen')
 
 describe 'MockNode', ->
   def 'node', -> new MockNode
@@ -10,8 +10,7 @@ describe 'MockNode', ->
 
   describe 'removeEventListener', ->
     it 'removes event listeners', (done) ->
-      @node.addEventListener 'event', ->
-        done('should not callback, but did')
+      @node.addEventListener('event', done)
       @node.removeEventListener('event', done)
       @node.emit 'event'
       done()
@@ -23,8 +22,7 @@ describe 'MockNode', ->
 
   describe 'detachEvent', ->
     it 'removes event listeners', (done) ->
-      @node.attachEvent 'event', ->
-        done('should not callback, but did')
+      @node.attachEvent('event', done)
       @node.detachEvent('event', done)
       @node.emit 'event'
       done()

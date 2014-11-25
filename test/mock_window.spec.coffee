@@ -1,5 +1,4 @@
-MockWindow = require('../lib/mock_window')
-MockDocument = require('../lib/mock_document')
+{MockWindow, MockDocument} = require('../lib/karen')
 
 describe 'MockWindow', ->
   def 'window', -> new MockWindow

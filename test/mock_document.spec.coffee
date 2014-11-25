@@ -1,4 +1,4 @@
-MockDocument = require('../lib/mock_document')
+{MockDocument} = require('../lib/karen')
 
 describe 'MockDocument', ->
   def 'document', -> new MockDocument

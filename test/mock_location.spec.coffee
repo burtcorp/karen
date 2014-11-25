@@ -1,3 +1,3 @@
-MockLocation = require('../lib/mock_location')
+{MockLocation} = require('../lib/karen')
 
 describe 'MockLocation', ->

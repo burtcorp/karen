@@ -14,9 +14,11 @@ class MockWindow extends MockNode
       log: (args...) =>
         @emit 'console-log', args...
 
-  document: new MockDocument
+    @__defineGetter__ 'document', ->
+      new MockDocument
 
-  location: new MockLocation
+    @__defineGetter__ 'location', ->
+      new MockLocation
 
   postMessage: (data, origin) ->
     @emit 'message',

@@ -47,3 +47,16 @@ describe 'Evented', ->
     @evented.on 'event', ->
       done('should not emit event, but did')
     done()
+
+  describe '#remove', ->
+    it 'removes event for specified listener', (done) ->
+      @evented.on 'event', done
+      @evented.remove 'event', done
+      done()
+
+    it 'does nothing if no such event', ->
+      @evented.remove('event')
+
+    it 'does nothing if no such listener', ->
+      @evented.on 'event', ->
+      @evented.remove 'event', ->

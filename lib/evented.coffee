@@ -10,4 +10,10 @@ class Evented
     for listener in (@listeners[event] || [])
       listener(args...)
 
+  remove: (event, listener) ->
+    index = (@listeners[event] || []).indexOf(listener)
+
+    unless index == -1
+      @listeners[event].splice(index, 1)
+
 module.exports = Evented

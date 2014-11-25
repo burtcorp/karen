@@ -15,6 +15,8 @@
     "coffee-script": "^1.8.0"
   },
   "devDependencies": {
-    "mocha": "^2.0.1"
+    "chai": "^1.10.0",
+    "mocha": "^2.0.1",
+    "mocha-define": "^0.2.0"
   }
 }

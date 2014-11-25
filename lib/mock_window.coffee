@@ -1,8 +1,8 @@
-Evented = require('./evented')
+MockNode = require('./mock_node')
 MockDocument = require('./mock_document')
 MockLocation = require('./mock_location')
 
-class MockWindow extends Evented
+class MockWindow extends MockNode
   constructor: ->
     super
 

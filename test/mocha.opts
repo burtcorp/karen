@@ -1,0 +1,2 @@
+--require test/test_helper.coffee
+--compilers coffee:coffee-script/register

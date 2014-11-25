@@ -31,3 +31,10 @@ describe 'MockNode', ->
     it 'allows for read/write styles', ->
       @node.style.background = 'red';
       @node.style.background.should.equal('red')
+
+  describe '#appendChild', ->
+    it 'emits append-child event with node as argument', (done) ->
+      child = {}
+      @node.on 'append-child', (node) ->
+        done() if node == child
+      @node.appendChild(child)

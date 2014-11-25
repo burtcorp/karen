@@ -27,6 +27,7 @@ class MockNode extends Evented
     new MockNode(type)
 
   appendChild: (node) ->
+    @emit 'append-child', node
 
 class MockDocument extends MockNode
   constructor: ->

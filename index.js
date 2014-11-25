@@ -1,1 +1,1 @@
-module.exports = require('./lib/mockingjay');
+module.exports = require('./lib/karen');

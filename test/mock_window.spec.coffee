@@ -69,6 +69,14 @@ describe 'MockWindow', ->
       @window.tick(50)
       done()
 
+    it 'handles floats', (done) ->
+      @window.setTimeout(done, 123.456)
+      @window.setTimeout ->
+        done('should not call this, but did')
+      , 125
+      @window.tick(123)
+      @window.tick(1.999)
+
   describe '#clearTimeout', ->
     it 'does nothing when given a non timeout object', ->
       @window.clearTimeout({})
@@ -114,6 +122,16 @@ describe 'MockWindow', ->
       , 100
       @window.tick(50)
       done()
+
+    it 'handles floats', (done) ->
+      count = 0
+      doneCheck = -> done() if (++count) >= 2
+      @window.setInterval(doneCheck, 123.456)
+      @window.setInterval ->
+        done('should not call this, but did')
+      , 249
+      @window.tick(247)
+      @window.tick(1.999)
 
   describe '#clearInterval', ->
     it 'does nothing when given a non timeout object', ->

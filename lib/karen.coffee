@@ -103,18 +103,20 @@ class MockWindow extends MockNode
       interval.cleared = true
 
   tick: (ms) ->
+    ms = Math.floor(ms)
+
     for [1..ms]
       @currentTime += 1
 
       for interval in @intervals
         unless interval.cleared
-          if interval.runAt == @currentTime
+          if @currentTime >= interval.runAt
             interval.callback()
             interval.runAt = @currentTime + interval.delay
 
       for timeout in @timeouts
         unless timeout.callbacked || timeout.cleared
-          if timeout.runAt == @currentTime
+          if @currentTime >= timeout.runAt
             timeout.callback()
             timeout.callbacked = true
 

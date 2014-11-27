@@ -1,6 +1,9 @@
 Evented = require('./evented')
 
 class MockLocation
+  search: ''
+  href: 'http://localhost'
+  pathname: '/'
 
 class MockNode extends Evented
   constructor: (@type) ->

@@ -22,6 +22,7 @@ class MockNode extends Evented
     @attributes = {}
 
     @__defineGetter__ 'ownerDocument', -> new MockDocument
+    @__defineGetter__ 'parentNode', -> new MockNode
 
   addEventListener: (event, listener) ->
     @on(event, listener)

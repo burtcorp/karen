@@ -77,3 +77,7 @@ describe 'MockNode', ->
   describe '#ownerDocument', ->
     it 'returns a MockDocument object', ->
       @node.ownerDocument.should.be.an('object')
+
+  describe '#parentNode', ->
+    it 'returns a MockNode object', ->
+      @node.parentNode.should.be.an('object')

@@ -15,6 +15,21 @@ describe 'MockNode', ->
         done() if node == child
       @node.appendChild(child)
 
+  describe '#removeChild', ->
+    it 'emits remove-child event with node when child has been added', (done) ->
+      node = {}
+      @node.on 'remove-child', (child) ->
+        done() if child == node
+      @node.appendChild(node)
+      @node.removeChild(node)
+
+    it 'does not emit remove-child event when child has not been added', (done) ->
+      node = {}
+      @node.on 'remove-child', ->
+        done('should not have emit event, but did')
+      @node.removeChild(node)
+      done()
+
   describe '#getAttribute/#setAttribute', ->
     it 'allows to read and write attributes', ->
       @node.setAttribute('foo', 'bar')

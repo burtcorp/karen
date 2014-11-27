@@ -49,13 +49,20 @@ class MockNode extends MockElement
     @define 'ownerDocument', -> new MockDocument
     @define 'parentNode', -> new MockNode
 
+    @children = []
+
   style: {}
 
   createElement: (type) ->
     new MockNode(type)
 
   appendChild: (node) ->
+    @children.push(node)
     @emit 'append-child', node
+
+  removeChild: (node) ->
+    if node in @children
+      @emit 'remove-child', node
 
   getBoundingClientRect: ->
     height: 0

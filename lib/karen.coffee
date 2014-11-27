@@ -84,12 +84,16 @@ class MockWindow extends MockNode
   encodeURIComponent: encodeURIComponent
 
   setTimeout: (callback, delay) ->
+    delay = Math.floor(delay)
     @timeouts.push
+      timeout: true
       runAt: @currentTime + delay
       callback: callback
 
   setInterval: (callback, delay) ->
+    delay = Math.floor(delay)
     @intervals.push
+      interval: true
       delay: delay
       runAt: @currentTime + delay
       callback: callback
@@ -102,22 +106,58 @@ class MockWindow extends MockNode
     if interval = @intervals[index - 1]
       interval.cleared = true
 
-  tick: (ms) ->
+  tick: (ms, callback) ->
     ms = Math.floor(ms)
 
-    for [1..ms]
-      @currentTime += 1
+    nextToRun = =>
+      candidates = []
 
-      for interval in @intervals
-        unless interval.cleared
-          if @currentTime >= interval.runAt
-            interval.callback()
-            interval.runAt = @currentTime + interval.delay
+      for item in @timeouts.concat(@intervals)
+        continue if @currentTime + ms < item.runAt
+        continue if item.cleared
 
-      for timeout in @timeouts
-        unless timeout.callbacked || timeout.cleared
-          if @currentTime >= timeout.runAt
-            timeout.callback()
-            timeout.callbacked = true
+        if item.interval
+          candidates.push(item)
+        else if item.timeout
+          candidates.push(item) unless item.callbacked
+
+      minItem = null
+      minValue = null
+
+      for candidate in candidates
+        unless minItem && candidate.runAt >= minValue
+          minItem = candidate
+          minValue = candidate.runAt
+
+      minItem
+
+    asyncOrSync = (fn) ->
+      if callback
+        setTimeout(fn, 0)
+      else
+        fn()
+
+    if current = nextToRun()
+      asyncOrSync =>
+        currentTime = @currentTime
+        @currentTime = current.runAt
+
+        tick = ms + currentTime - current.runAt
+
+        if current.interval
+          current.runAt += current.delay
+        else
+          current.callbacked = true
+
+        current.callback()
+
+        if tick >= 0
+          @tick(tick, callback)
+    else
+      @currentTime += ms
+
+      if callback
+        callback()
+
 
 module.exports = {MockWindow, MockDocument, MockNode, MockLocation}

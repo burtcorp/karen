@@ -56,10 +56,11 @@ describe 'MockWindow', ->
     it 'runs multiple callbacks', (done) ->
       count = 0
       doneCheck = ->
-        done() if (++count) >= 2
+        done() if (++count) >= 3
       @window.setTimeout(doneCheck, 50)
       @window.setTimeout(doneCheck, 100)
-      @window.tick(100)
+      @window.setTimeout(doneCheck, 150)
+      @window.tick(150)
 
     it 'does not run callback when ticking half before', (done) ->
       @window.tick(50)
@@ -76,6 +77,51 @@ describe 'MockWindow', ->
       , 125
       @window.tick(123)
       @window.tick(1.999)
+
+    it 'runs timeouts in correct order', (done) ->
+      order = []
+
+      @window.setTimeout =>
+        order.push(1)
+
+        @window.setTimeout ->
+          order.push(2)
+        , 100
+      , 100
+
+      @window.setTimeout ->
+        order.push(3)
+      , 300
+
+      @window.tick 300, ->
+        expect(order).to.eql([1, 2, 3])
+        done()
+
+    it 'supports nested timeouts', (done) ->
+      @window.setTimeout =>
+        @window.setTimeout(done, 100)
+      , 100
+      @window.tick(200)
+
+    it 'is called async if callback', (done) ->
+      called = false
+      @window.setTimeout ->
+        called = true
+        done()
+      , 100
+      @window.tick 50, ->
+      @window.tick 50, ->
+      expect(called).to.be.false
+
+    it 'is not called async unless callback', (done) ->
+      called = false
+      @window.setTimeout ->
+        called = true
+        done()
+      , 100
+      @window.tick(50)
+      @window.tick(50)
+      expect(called).to.be.true
 
   describe '#clearTimeout', ->
     it 'does nothing when given a non timeout object', ->
@@ -133,6 +179,31 @@ describe 'MockWindow', ->
       @window.tick(247)
       @window.tick(1.999)
 
+    it 'runs intervals in correct order', (done) ->
+      order = []
+
+      @window.setInterval =>
+        order.push(1)
+
+        @window.setInterval ->
+          order.push(2)
+        , 100
+      , 100
+
+      @window.setInterval ->
+        order.push(3)
+      , 300
+
+      @window.tick 300, ->
+        expect(order).to.eql([1, 1, 2, 1, 3, 2, 2])
+        done()
+
+    it 'supports nested intervals', (done) ->
+      @window.setInterval =>
+        @window.setInterval(done, 100)
+      , 100
+      @window.tick(200)
+
   describe '#clearInterval', ->
     it 'does nothing when given a non timeout object', ->
       @window.clearInterval({})
@@ -146,18 +217,23 @@ describe 'MockWindow', ->
       @window.clearInterval(interval)
       @window.tick(100)
 
-  it 'runs timeouts and intervals in correct order', (done) ->
-    timeoutDone = false
+  describe '#tick', ->
+    it 'callbacks when done', (done) ->
+      aDone = false
+      bDone = false
+      cDone = false
 
-    @window.setTimeout ->
-      timeoutDone = true
-    , 50
+      @window.setTimeout ->
+        aDone = true
+      , 100
 
-    @window.setInterval ->
-      if timeoutDone
-        done()
-      else
-        done('timeout was already done, but should not have been')
-    , 100
+      @window.setTimeout ->
+        bDone = true
+      , 200
 
-    @window.tick(100)
+      @window.setTimeout ->
+        cDone = true
+      , 300
+
+      @window.tick 300, ->
+        done() if aDone && bDone && cDone

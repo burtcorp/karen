@@ -16,6 +16,15 @@ class MockElement extends Evented
   constructor: (@type) ->
     super()
 
+  define: (name, callback) ->
+    cache = @cache ?= {}
+
+    Object.defineProperty @, name,
+      get: ->
+        cache[name] ?= callback()
+      set: (value) ->
+        cache[name] = value
+
   addEventListener: (event, listener) ->
     @on(event, listener)
 
@@ -37,8 +46,8 @@ class MockNode extends MockElement
 
     @attributes = {}
 
-    @__defineGetter__ 'ownerDocument', -> new MockDocument
-    @__defineGetter__ 'parentNode', -> new MockNode
+    @define 'ownerDocument', -> new MockDocument
+    @define 'parentNode', -> new MockNode
 
   style: {}
 
@@ -90,12 +99,11 @@ class MockDocument extends MockNode
 
       @emit 'cookie', key, value, {path, domain} = cookies[key]
 
-    @__defineGetter__ 'defaultView', -> new MockWindow
-    @__defineGetter__ 'parentWindow', -> new MockWindow
-
-    @body = new MockNode('body')
-    @head = new MockNode('head')
-    @documentElement = new MockNode('documentElement')
+    @define 'defaultView', -> new MockWindow
+    @define 'parentWindow', -> new MockWindow
+    @define 'body', -> new MockNode('body')
+    @define 'head', -> new MockNode('head')
+    @define 'documentElement', -> new MockNode('documentElement')
 
   domain: 'localhost'
 
@@ -113,10 +121,10 @@ class MockWindow extends MockElement
       log: (args...) =>
         @emit 'console-log', args...
 
-    @document = new MockDocument
-    @location = new MockLocation
-    @navigator = new MockNavigator
-    @screen = new MockScreen
+    @define 'document', -> new MockDocument
+    @define 'location', -> new MockLocation
+    @define 'navigator', -> new MockNavigator
+    @define 'screen', -> new MockScreen
 
   postMessage: (data, origin) ->
     @emit 'message',

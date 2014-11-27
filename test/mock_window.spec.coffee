@@ -7,10 +7,6 @@ describe 'MockWindow', ->
     it 'is itself', ->
       @window.top.should.equal(@window)
 
-  describe '#document', ->
-    it 'is a MockDocument', ->
-      @window.document.should.be.an('object')
-
   describe '#console', ->
     describe '#log', ->
       it 'emits console-log event', (done) ->
@@ -29,17 +25,33 @@ describe 'MockWindow', ->
         event.source.should.be.an('object')
       @window.postMessage('message', origin)
 
+  describe '#document', ->
+    it 'is a MockDocument', ->
+      @window.document.should.be.an('object')
+
+    it 'returns same object every time', ->
+      @window.document.should.equal(@window.document)
+
   describe '#location', ->
     it 'returns a MockLocation', ->
       @window.location.should.be.an('object')
+
+    it 'returns same object every time', ->
+      @window.location.should.equal(@window.location)
 
   describe '#screen', ->
     it 'returns a MockScreen', ->
       @window.screen.should.be.an('object')
 
+    it 'returns same object every time', ->
+      @window.screen.should.equal(@window.screen)
+
   describe '#navigator', ->
     it 'returns a MockNavigator', ->
       @window.navigator.should.be.an('object')
+
+    it 'returns same object every time', ->
+      @window.navigator.should.equal(@window.navigator)
 
   describe 'encodeURIComponent', ->
     it 'returns encoded string', ->

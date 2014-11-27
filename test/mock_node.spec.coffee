@@ -54,6 +54,12 @@ describe 'MockNode', ->
     it 'returns a MockDocument object', ->
       @node.ownerDocument.should.be.an('object')
 
+    it 'returns same owner document every time', ->
+      @node.ownerDocument.should.equal(@node.ownerDocument)
+
   describe '#parentNode', ->
     it 'returns a MockNode object', ->
       @node.parentNode.should.be.an('object')
+
+    it 'returns same parent every time', ->
+      @node.parentNode.should.equal(@node.parentNode)

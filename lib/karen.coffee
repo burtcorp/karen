@@ -19,6 +19,8 @@ class MockNode extends Evented
     if @type?.toLowerCase() == 'iframe'
       @contentWindow = new MockWindow
 
+    @attributes = {}
+
   addEventListener: (event, listener) ->
     @on(event, listener)
 
@@ -38,6 +40,12 @@ class MockNode extends Evented
 
   appendChild: (node) ->
     @emit 'append-child', node
+
+  setAttribute: (name, value) ->
+    @attributes[name] = value
+
+  getAttribute: (name) ->
+    @attributes[name]
 
 class MockDocument extends MockNode
   constructor: ->

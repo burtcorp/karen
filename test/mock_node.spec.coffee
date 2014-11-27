@@ -38,3 +38,10 @@ describe 'MockNode', ->
       @node.on 'append-child', (node) ->
         done() if node == child
       @node.appendChild(child)
+
+  describe '#getAttribute/#setAttribute', ->
+    it 'allows to read and write attributes', ->
+      @node.setAttribute('foo', 'bar')
+      @node.setAttribute('baz', 'qux')
+      @node.getAttribute('foo').should.equal('bar')
+      @node.getAttribute('baz').should.equal('qux')

@@ -95,6 +95,8 @@ class MockDocument extends MockNode
 
   domain: 'localhost'
 
+  getElementsByTagName: -> []
+
 class MockWindow extends MockNode
   constructor: ->
     super('window')

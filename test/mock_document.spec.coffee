@@ -41,3 +41,7 @@ describe 'MockDocument', ->
   describe '#domain', ->
     it 'returns localhost', ->
       @document.domain.should.equal('localhost')
+
+  describe '#getElementsByTagName', ->
+    it 'returns an empty array', ->
+      @document.getElementsByTagName('div').should.eql([])

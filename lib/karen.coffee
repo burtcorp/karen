@@ -8,6 +8,10 @@ class MockLocation
 class MockNavigator
   userAgent: ''
 
+class MockScreen
+  width: 0
+  height: 0
+
 class MockNode extends Evented
   constructor: (@type) ->
     super
@@ -80,6 +84,7 @@ class MockWindow extends MockNode
     @document = new MockDocument
     @location = new MockLocation
     @navigator = new MockNavigator
+    @screen = new MockScreen
 
   postMessage: (data, origin) ->
     @emit 'message',
@@ -167,4 +172,4 @@ class MockWindow extends MockNode
         callback()
 
 
-module.exports = {MockWindow, MockDocument, MockNode, MockLocation, MockNavigator}
+module.exports = {MockWindow, MockDocument, MockNode, MockLocation, MockNavigator, MockScreen}

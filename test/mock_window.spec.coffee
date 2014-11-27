@@ -33,6 +33,10 @@ describe 'MockWindow', ->
     it 'returns a MockLocation', ->
       @window.location.should.be.an('object')
 
+  describe '#screen', ->
+    it 'returns a MockScreen', ->
+      @window.screen.should.be.an('object')
+
   describe '#navigator', ->
     it 'returns a MockNavigator', ->
       @window.navigator.should.be.an('object')

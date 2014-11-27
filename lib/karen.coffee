@@ -12,7 +12,7 @@ class MockScreen
   width: 0
   height: 0
 
-class MockNode extends Evented
+class MockElement extends Evented
   constructor: (@type) ->
     super
 
@@ -23,6 +23,8 @@ class MockNode extends Evented
 
     @__defineGetter__ 'ownerDocument', -> new MockDocument
     @__defineGetter__ 'parentNode', -> new MockNode
+
+    @attributes = {}
 
   addEventListener: (event, listener) ->
     @on(event, listener)
@@ -36,6 +38,7 @@ class MockNode extends Evented
   detachEvent: (event, listener) ->
     @remove(event, listener)
 
+class MockNode extends MockElement
   style: {}
 
   createElement: (type) ->
@@ -97,7 +100,7 @@ class MockDocument extends MockNode
 
   getElementsByTagName: -> []
 
-class MockWindow extends MockNode
+class MockWindow extends MockElement
   constructor: ->
     super('window')
 
@@ -202,4 +205,4 @@ class MockWindow extends MockNode
   setImmediate: (callback, params...) ->
     setImmediate(callback, params...)
 
-module.exports = {MockWindow, MockDocument, MockNode, MockLocation, MockNavigator, MockScreen}
+module.exports = {MockWindow, MockDocument, MockElement, MockNode, MockLocation, MockNavigator, MockScreen}

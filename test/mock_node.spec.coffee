@@ -73,3 +73,7 @@ describe 'MockNode', ->
     describe '#top', ->
       it 'returns node top', ->
         @boundingClientRect.top.should.equal(0)
+
+  describe '#ownerDocument', ->
+    it 'returns a MockDocument object', ->
+      @node.ownerDocument.should.be.an('object')

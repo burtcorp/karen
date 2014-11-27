@@ -86,6 +86,9 @@ class MockDocument extends MockNode
 
       @emit 'cookie', key, value, {path, domain} = cookies[key]
 
+    @__defineGetter__ 'defaultView', -> new MockWindow
+    @__defineGetter__ 'parentWindow', -> new MockWindow
+
     @body = new MockNode('body')
     @head = new MockNode('head')
 

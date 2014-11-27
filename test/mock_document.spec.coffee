@@ -25,3 +25,11 @@ describe 'MockDocument', ->
   describe '#head', ->
     it 'returns a MockNode with type head', ->
       @document.head.type.should.equal('head')
+
+  describe '#defaultView', ->
+    it 'returns a MockWindow object', ->
+      @document.defaultView.should.be.an('object')
+
+  describe '#parentWindow', ->
+    it 'returns a MockWindow object', ->
+      @document.parentWindow.should.be.an('object')

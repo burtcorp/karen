@@ -47,7 +47,7 @@ class MockNode extends MockElement
   appendChild: (node) ->
     @emit 'append-child', node
 
-  getBoundingClientRect:
+  getBoundingClientRect: ->
     height: 0
     width: 0
     left: 0

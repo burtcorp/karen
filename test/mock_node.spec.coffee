@@ -24,7 +24,7 @@ describe 'MockNode', ->
 
   describe 'getBoundingClientRect', ->
     beforeEach ->
-      @boundingClientRect = @node.getBoundingClientRect
+      @boundingClientRect = @node.getBoundingClientRect()
 
     describe '#height', ->
       it 'returns node height', ->

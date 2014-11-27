@@ -14,15 +14,7 @@ class MockScreen
 
 class MockElement extends Evented
   constructor: (@type) ->
-    super
-
-    if @type?.toLowerCase() == 'iframe'
-      @contentWindow = new MockWindow
-
-    @__defineGetter__ 'ownerDocument', -> new MockDocument
-    @__defineGetter__ 'parentNode', -> new MockNode
-
-    @attributes = {}
+    super()
 
   addEventListener: (event, listener) ->
     @on(event, listener)
@@ -37,6 +29,17 @@ class MockElement extends Evented
     @remove(event, listener)
 
 class MockNode extends MockElement
+  constructor: (type) ->
+    super
+
+    if type?.toLowerCase() == 'iframe'
+      @contentWindow = new MockWindow
+
+    @attributes = {}
+
+    @__defineGetter__ 'ownerDocument', -> new MockDocument
+    @__defineGetter__ 'parentNode', -> new MockNode
+
   style: {}
 
   createElement: (type) ->

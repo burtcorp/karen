@@ -33,3 +33,7 @@ describe 'MockDocument', ->
   describe '#parentWindow', ->
     it 'returns a MockWindow object', ->
       @document.parentWindow.should.be.an('object')
+
+  describe '#documentElement', ->
+    it 'returns a MockNode with type documentElement', ->
+      @document.documentElement.type.should.equal('documentElement')

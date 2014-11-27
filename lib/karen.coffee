@@ -91,6 +91,7 @@ class MockDocument extends MockNode
 
     @body = new MockNode('body')
     @head = new MockNode('head')
+    @documentElement = new MockNode('documentElement')
 
 class MockWindow extends MockNode
   constructor: ->

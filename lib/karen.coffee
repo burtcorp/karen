@@ -19,8 +19,6 @@ class MockElement extends Evented
     if @type?.toLowerCase() == 'iframe'
       @contentWindow = new MockWindow
 
-    @attributes = {}
-
     @__defineGetter__ 'ownerDocument', -> new MockDocument
     @__defineGetter__ 'parentNode', -> new MockNode
 

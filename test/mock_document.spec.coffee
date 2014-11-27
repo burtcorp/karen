@@ -17,3 +17,7 @@ describe 'MockDocument', ->
         options.path.should.equal('/')
         done()
       @document.cookie = 'foo=bar; domain=.domain.com; path=/'
+
+  describe '#body', ->
+    it 'returns a MockNode with type body', ->
+      @document.body.type.should.equal('body')

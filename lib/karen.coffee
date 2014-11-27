@@ -199,5 +199,7 @@ class MockWindow extends MockNode
       if callback
         callback()
 
+  setImmediate: (callback, params...) ->
+    setImmediate(callback, params...)
 
 module.exports = {MockWindow, MockDocument, MockNode, MockLocation, MockNavigator, MockScreen}

@@ -245,3 +245,11 @@ describe 'MockWindow', ->
 
       @window.tick 300, ->
         done() if aDone && bDone && cDone
+
+  describe '#setImmediate', ->
+    it 'callbacks', (done) ->
+      @window.setImmediate (foo, bar) ->
+        expect(foo).to.equal('foo')
+        expect(bar).to.equal('bar')
+        done()
+      , 'foo', 'bar'

@@ -5,6 +5,9 @@ class MockLocation
   href: 'http://localhost'
   pathname: '/'
 
+class MockNavigator
+  userAgent: ''
+
 class MockNode extends Evented
   constructor: (@type) ->
     super
@@ -76,6 +79,7 @@ class MockWindow extends MockNode
 
     @document = new MockDocument
     @location = new MockLocation
+    @navigator = new MockNavigator
 
   postMessage: (data, origin) ->
     @emit 'message',
@@ -163,4 +167,4 @@ class MockWindow extends MockNode
         callback()
 
 
-module.exports = {MockWindow, MockDocument, MockNode, MockLocation}
+module.exports = {MockWindow, MockDocument, MockNode, MockLocation, MockNavigator}

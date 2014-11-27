@@ -33,6 +33,10 @@ describe 'MockWindow', ->
     it 'returns a MockLocation', ->
       @window.location.should.be.an('object')
 
+  describe '#navigator', ->
+    it 'returns a MockNavigator', ->
+      @window.navigator.should.be.an('object')
+
   describe 'encodeURIComponent', ->
     it 'returns encoded string', ->
       @window.encodeURIComponent('foo/bar').should.equal('foo%2Fbar')

@@ -76,6 +76,7 @@ class MockDocument extends MockNode
       @emit 'cookie', key, value, {path, domain} = cookies[key]
 
     @body = new MockNode('body')
+    @head = new MockNode('head')
 
 class MockWindow extends MockNode
   constructor: ->

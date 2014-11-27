@@ -21,3 +21,7 @@ describe 'MockDocument', ->
   describe '#body', ->
     it 'returns a MockNode with type body', ->
       @document.body.type.should.equal('body')
+
+  describe '#head', ->
+    it 'returns a MockNode with type head', ->
+      @document.head.type.should.equal('head')

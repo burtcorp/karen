@@ -37,3 +37,7 @@ describe 'MockDocument', ->
   describe '#documentElement', ->
     it 'returns a MockNode with type documentElement', ->
       @document.documentElement.type.should.equal('documentElement')
+
+  describe '#domain', ->
+    it 'returns localhost', ->
+      @document.domain.should.equal('localhost')

@@ -93,6 +93,8 @@ class MockDocument extends MockNode
     @head = new MockNode('head')
     @documentElement = new MockNode('documentElement')
 
+  domain: 'localhost'
+
 class MockWindow extends MockNode
   constructor: ->
     super('window')

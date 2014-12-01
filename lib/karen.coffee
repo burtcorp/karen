@@ -218,6 +218,9 @@ class MockWindow extends MockElement
       if callback
         callback()
 
+  tickAsync: (ms, callback = ->) ->
+    @tick(ms, callback)
+
   setImmediate: (callback, params...) ->
     setImmediate(callback, params...)
 

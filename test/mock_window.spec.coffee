@@ -258,6 +258,22 @@ describe 'MockWindow', ->
       @window.tick 300, ->
         done() if aDone && bDone && cDone
 
+  describe '#tickAsync', ->
+    it 'is called async', (done) ->
+      called = false
+      @window.setTimeout ->
+        called = true
+        done()
+      , 100
+      @window.tickAsync(50)
+      @window.tickAsync(50)
+      expect(called).to.be.false
+
+    it 'is callbacks', (done) ->
+      fn = ->
+      @window.setTimeout(fn, 100)
+      @window.tickAsync(50, done)
+
   describe '#setImmediate', ->
     it 'callbacks', (done) ->
       @window.setImmediate (foo, bar) ->

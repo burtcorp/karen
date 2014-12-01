@@ -26,3 +26,22 @@ describe 'MockElement', ->
       @element.detachEvent('event', done)
       @element.emit 'event'
       done()
+
+  describe '#define', ->
+    beforeEach ->
+      @element.define 'foo', -> 'bar'
+
+    it 'callbacks first time', ->
+      expect(@element.foo).to.equal('bar')
+
+    it 'returns assigned value', ->
+      @element.foo = 'BAR'
+      expect(@element.foo).to.equal('BAR')
+
+    it 'does not override when null', ->
+      @element.foo = null
+      expect(@element.foo).to.be.null
+
+    it 'overrides when undefined', ->
+      @element.foo = undefined
+      expect(@element.foo).to.equal('bar')

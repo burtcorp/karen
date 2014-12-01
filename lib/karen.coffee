@@ -21,7 +21,10 @@ class MockElement extends Evented
 
     Object.defineProperty @, name,
       get: ->
-        cache[name] ?= callback()
+        if cache[name] == undefined
+          cache[name] = callback()
+        else
+          cache[name]
       set: (value) ->
         cache[name] = value
 

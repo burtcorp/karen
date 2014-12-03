@@ -121,6 +121,7 @@ class MockDocument extends MockNode
 
   readyState: 'complete'
 
+  getElementById: -> null
 
 class MockWindow extends MockElement
   constructor: ->

@@ -60,3 +60,7 @@ describe 'MockDocument', ->
   describe '#readyState', ->
     it 'is complete', ->
       @document.readyState.should.equal('complete')
+
+  describe '#getElementById', ->
+    it 'returns null', ->
+      expect(@document.getElementById('id')).to.be.null

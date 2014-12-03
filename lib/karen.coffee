@@ -83,6 +83,8 @@ class MockNode extends MockElement
 
   getElementsByTagName: -> []
 
+  insertBefore: (other) ->
+
 class MockDocument extends MockNode
   constructor: ->
     super('document')

@@ -82,3 +82,7 @@ describe 'MockNode', ->
   describe '#getElementsByTagName', ->
     it 'returns an empty array', ->
       @node.getElementsByTagName('div').should.eql([])
+
+  describe '#insertBefore', ->
+    it 'does nothing but exist', ->
+      @node.insertBefore({})

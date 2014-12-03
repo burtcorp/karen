@@ -57,6 +57,10 @@ describe 'MockDocument', ->
     it 'returns localhost', ->
       @document.domain.should.equal('localhost')
 
+  describe '#readyState', ->
+    it 'is complete', ->
+      @document.readyState.should.equal('complete')
+
   describe '#getElementsByTagName', ->
     it 'returns an empty array', ->
       @document.getElementsByTagName('div').should.eql([])

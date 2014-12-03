@@ -117,6 +117,8 @@ class MockDocument extends MockNode
 
   domain: 'localhost'
 
+  readyState: 'complete'
+
   getElementsByTagName: -> []
 
 class MockWindow extends MockElement

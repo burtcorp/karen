@@ -81,6 +81,8 @@ class MockNode extends MockElement
   getAttribute: (name) ->
     @attributes[name]
 
+  getElementsByTagName: -> []
+
 class MockDocument extends MockNode
   constructor: ->
     super('document')
@@ -119,7 +121,6 @@ class MockDocument extends MockNode
 
   readyState: 'complete'
 
-  getElementsByTagName: -> []
 
 class MockWindow extends MockElement
   constructor: ->

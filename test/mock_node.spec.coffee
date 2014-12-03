@@ -78,3 +78,7 @@ describe 'MockNode', ->
 
     it 'returns same parent every time', ->
       @node.parentNode.should.equal(@node.parentNode)
+
+  describe '#getElementsByTagName', ->
+    it 'returns an empty array', ->
+      @node.getElementsByTagName('div').should.eql([])

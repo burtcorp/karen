@@ -60,7 +60,3 @@ describe 'MockDocument', ->
   describe '#readyState', ->
     it 'is complete', ->
       @document.readyState.should.equal('complete')
-
-  describe '#getElementsByTagName', ->
-    it 'returns an empty array', ->
-      @document.getElementsByTagName('div').should.eql([])

@@ -1,4 +1,4 @@
-Evented = require('../lib/evented')
+{Evented} = require('../lib/karen')
 
 describe 'Evented', ->
   def 'evented', -> new Evented

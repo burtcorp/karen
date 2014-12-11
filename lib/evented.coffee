@@ -16,4 +16,5 @@ class Evented
     unless index == -1
       @listeners[event].splice(index, 1)
 
-module.exports = Evented
+if module?
+  module.exports = Evented

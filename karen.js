@@ -1,5 +1,5 @@
 (function() {
-  var Evented, MockDocument, MockElement, MockLocation, MockNavigator, MockNode, MockScreen, MockWindow,
+  var Evented, MockDocument, MockElement, MockLocation, MockNavigator, MockNode, MockScreen, MockWindow, api, key, value,
     __slice = [].slice,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -408,17 +408,24 @@
 
   })(MockElement);
 
+  api = {
+    Evented: Evented,
+    MockWindow: MockWindow,
+    MockDocument: MockDocument,
+    MockElement: MockElement,
+    MockNode: MockNode,
+    MockLocation: MockLocation,
+    MockNavigator: MockNavigator,
+    MockScreen: MockScreen
+  };
+
   if (typeof module !== "undefined" && module !== null) {
-    module.exports = {
-      Evented: Evented,
-      MockWindow: MockWindow,
-      MockDocument: MockDocument,
-      MockElement: MockElement,
-      MockNode: MockNode,
-      MockLocation: MockLocation,
-      MockNavigator: MockNavigator,
-      MockScreen: MockScreen
-    };
+    module.exports = api;
+  } else if (typeof window !== "undefined" && window !== null) {
+    for (key in api) {
+      value = api[key];
+      window[key] = value;
+    }
   }
 
 }).call(this);

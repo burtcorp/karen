@@ -2,7 +2,7 @@
   "name": "karen",
   "version": "0.2.3",
   "description": "Test mocks for window, document and dom nodes",
-  "main": "index.js",
+  "main": "karen.js",
   "scripts": {
     "test": ""
   },
@@ -16,6 +16,9 @@
   },
   "devDependencies": {
     "chai": "^1.10.0",
+    "gulp": "^3.8.10",
+    "gulp-coffee": "^2.2.0",
+    "gulp-concat": "^2.4.2",
     "mocha": "^2.0.1",
     "mocha-define": "^0.2.0"
   }

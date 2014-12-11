@@ -1,6 +1,6 @@
 {
   "name": "karen",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "description": "Test mocks for window, document and dom nodes",
   "main": "index.js",
   "scripts": {

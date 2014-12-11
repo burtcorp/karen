@@ -249,14 +249,19 @@ class MockWindow extends MockElement
   setImmediate: (callback, params...) ->
     setImmediate(callback, params...)
 
+api = {
+  Evented,
+  MockWindow,
+  MockDocument,
+  MockElement,
+  MockNode,
+  MockLocation,
+  MockNavigator,
+  MockScreen
+}
+
 if module?
-  module.exports = {
-    Evented,
-    MockWindow,
-    MockDocument,
-    MockElement,
-    MockNode,
-    MockLocation,
-    MockNavigator,
-    MockScreen
-  }
+  module.exports = api
+else if window?
+  for key, value of api
+    window[key] = value

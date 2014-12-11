@@ -1,4 +1,4 @@
-Evented = require('./evented')
+Evented = require('./evented') if require?
 
 class MockLocation
   search: ''

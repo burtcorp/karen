@@ -1,1 +1,3 @@
-module.exports = require('./lib/karen');
+if (typeof module !== 'undefined') {
+  module.exports = require('./lib/karen');
+}

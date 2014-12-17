@@ -91,6 +91,11 @@ class MockNode extends MockElement
     right: 0
     top: 0
 
+  scrollWidth: 0
+  scrollHeight: 0
+  clientWidth: 0
+  clientHeight: 0
+
   setAttribute: (name, value) ->
     @attributes[name] = value
 
@@ -157,6 +162,9 @@ class MockWindow extends MockElement
     @define 'location', -> new MockLocation
     @define 'navigator', -> new MockNavigator
     @define 'screen', -> new MockScreen
+
+  pageXOffset: 0
+  pageYOffset: 0
 
   postMessage: (data, origin) ->
     @emit 'message',

@@ -3,6 +3,14 @@
 describe 'MockWindow', ->
   def 'window', -> new MockWindow
 
+  describe '#pageXOffset', ->
+    it 'returns zero', ->
+      @window.pageXOffset.should.equal(0)
+
+  describe '#pageYOffset', ->
+    it 'returns zero', ->
+      @window.pageYOffset.should.equal(0)
+
   describe '#top', ->
     it 'is itself', ->
       @window.top.should.equal(@window)

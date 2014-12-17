@@ -37,7 +37,7 @@ describe 'MockNode', ->
       @node.getAttribute('foo').should.equal('bar')
       @node.getAttribute('baz').should.equal('qux')
 
-  describe 'getBoundingClientRect', ->
+  describe '#getBoundingClientRect', ->
     beforeEach ->
       @boundingClientRect = @node.getBoundingClientRect()
 

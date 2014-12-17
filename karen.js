@@ -166,6 +166,14 @@
       };
     };
 
+    MockNode.prototype.scrollWidth = 0;
+
+    MockNode.prototype.scrollHeight = 0;
+
+    MockNode.prototype.clientWidth = 0;
+
+    MockNode.prototype.clientHeight = 0;
+
     MockNode.prototype.setAttribute = function(name, value) {
       return this.attributes[name] = value;
     };
@@ -276,6 +284,10 @@
         return new MockScreen;
       });
     }
+
+    MockWindow.prototype.pageXOffset = 0;
+
+    MockWindow.prototype.pageYOffset = 0;
 
     MockWindow.prototype.postMessage = function(data, origin) {
       return this.emit('message', {

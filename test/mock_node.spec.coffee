@@ -65,6 +65,14 @@ describe 'MockNode', ->
       it 'returns node top', ->
         @boundingClientRect.top.should.equal(0)
 
+  describe '#scrollTop', ->
+    it 'returns scroll top', ->
+      @node.scrollTop.should.equal(0)
+
+  describe '#scrollLeft', ->
+    it 'returns scroll left', ->
+      @node.scrollLeft.should.equal(0)
+
   describe '#scrollWidth', ->
     it 'returns scroll width', ->
       @node.scrollWidth.should.equal(1265)

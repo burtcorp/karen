@@ -91,6 +91,8 @@ class MockNode extends MockElement
     right: 0
     top: 0
 
+  scrollTop: 0
+  scrollLeft: 0
   scrollWidth: 1265
   scrollHeight: 2284
   clientWidth: 1265

@@ -25,8 +25,8 @@ class MockNavigator
   userAgent: ''
 
 class MockScreen
-  width: 0
-  height: 0
+  width: 2560
+  height: 1440
 
 class MockElement extends Evented
   constructor: (@type) ->

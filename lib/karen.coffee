@@ -263,13 +263,13 @@ class MockWindow extends MockElement
     setImmediate(callback, params...)
 
 api = {
-  Evented,
-  MockWindow,
-  MockDocument,
-  MockElement,
-  MockNode,
-  MockLocation,
-  MockNavigator,
+  Evented
+  MockWindow
+  MockDocument
+  MockElement
+  MockNode
+  MockLocation
+  MockNavigator
   MockScreen
 }
 

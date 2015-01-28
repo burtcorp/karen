@@ -66,20 +66,20 @@ describe 'MockNode', ->
         @boundingClientRect.top.should.equal(0)
 
   describe '#scrollWidth', ->
-    it 'returns zero', ->
-      @node.scrollWidth.should.equal(0)
+    it 'returns scroll width', ->
+      @node.scrollWidth.should.equal(1265)
 
   describe '#scrollHeight', ->
-    it 'returns zero', ->
-      @node.scrollHeight.should.equal(0)
+    it 'returns scroll height', ->
+      @node.scrollHeight.should.equal(2284)
 
   describe '#clientWidth', ->
-    it 'returns zero', ->
-      @node.clientWidth.should.equal(0)
+    it 'returns client width', ->
+      @node.clientWidth.should.equal(1265)
 
   describe '#clientHeight', ->
-    it 'returns zero', ->
-      @node.clientHeight.should.equal(0)
+    it 'returns client height', ->
+      @node.clientHeight.should.equal(2284)
 
   describe '#ownerDocument', ->
     it 'returns a MockDocument object', ->

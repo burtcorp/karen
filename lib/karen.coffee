@@ -91,10 +91,10 @@ class MockNode extends MockElement
     right: 0
     top: 0
 
-  scrollWidth: 0
-  scrollHeight: 0
-  clientWidth: 0
-  clientHeight: 0
+  scrollWidth: 1265
+  scrollHeight: 2284
+  clientWidth: 1265
+  clientHeight: 2284
 
   setAttribute: (name, value) ->
     @attributes[name] = value

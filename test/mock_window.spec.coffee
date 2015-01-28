@@ -11,6 +11,14 @@ describe 'MockWindow', ->
     it 'returns zero', ->
       @window.pageYOffset.should.equal(0)
 
+  describe '#innerWidth', ->
+    it 'returns width', ->
+      @window.innerWidth.should.equal(1280)
+
+  describe '#innerHeight', ->
+    it 'returns height', ->
+      @window.innerHeight.should.equal(1086)
+
   describe '#top', ->
     it 'is itself', ->
       @window.top.should.equal(@window)

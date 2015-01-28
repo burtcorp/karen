@@ -166,6 +166,9 @@ class MockWindow extends MockElement
   pageXOffset: 0
   pageYOffset: 0
 
+  innerWidth: 1280
+  innerHeight: 1086
+
   postMessage: (data, origin) ->
     @emit 'message',
       data: data

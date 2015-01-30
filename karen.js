@@ -1,5 +1,5 @@
 (function() {
-  var Evented, MockDocument, MockElement, MockLocation, MockNavigator, MockNode, MockScreen, MockWindow, api, key, value,
+  var Evented, MockDate, MockDocument, MockElement, MockLocation, MockNavigator, MockNode, MockScreen, MockWindow, api, key, value,
     __slice = [].slice,
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
@@ -41,6 +41,26 @@
     return Evented;
 
   })();
+
+  MockDate = (function() {
+    function MockDate() {
+      var args;
+      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      if (!(args.length > 0)) {
+        args = MockDate.__now.getTime();
+      }
+      return new (Function.prototype.bind.apply(Date, [null].concat(args)));
+    }
+
+    return MockDate;
+
+  })();
+
+  MockDate.__now = new Date;
+
+  MockDate.add = function(ms) {
+    return MockDate.__now.setTime(MockDate.__now.getTime() + ms);
+  };
 
   MockLocation = (function() {
     function MockLocation() {}
@@ -289,6 +309,8 @@
       });
     }
 
+    MockWindow.prototype.Date = MockDate;
+
     MockWindow.prototype.pageXOffset = 0;
 
     MockWindow.prototype.pageYOffset = 0;
@@ -342,7 +364,7 @@
       }
     };
 
-    MockWindow.prototype.tick = function(ms, callback) {
+    MockWindow.prototype.tick = function(ms, callback, ehh) {
       var asyncOrSync, current, nextToRun;
       ms = Math.floor(ms);
       nextToRun = (function(_this) {
@@ -386,6 +408,7 @@
         }
       };
       if (current = nextToRun()) {
+        MockDate.add(current.runAt - this.currentTime);
         return asyncOrSync((function(_this) {
           return function() {
             var currentTime, tick;
@@ -404,6 +427,7 @@
           };
         })(this));
       } else {
+        MockDate.add(ms);
         this.currentTime += ms;
         if (callback) {
           return callback();
@@ -436,7 +460,8 @@
     MockNode: MockNode,
     MockLocation: MockLocation,
     MockNavigator: MockNavigator,
-    MockScreen: MockScreen
+    MockScreen: MockScreen,
+    MockDate: MockDate
   };
 
   if (typeof module !== "undefined" && module !== null) {

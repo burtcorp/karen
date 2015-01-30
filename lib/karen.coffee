@@ -16,6 +16,17 @@ class Evented
     unless index == -1
       @listeners[event].splice(index, 1)
 
+class MockDate
+  constructor: (args...) ->
+    if args.length == 0
+      args = MockDate.__now.getTime()
+
+    return new (Function.prototype.bind.apply(Date, [null].concat(args)))
+
+MockDate.__now = new Date
+MockDate.add = (ms) ->
+  MockDate.__now.setTime(MockDate.__now.getTime() + ms)
+
 class MockLocation
   search: ''
   href: 'http://localhost'
@@ -165,6 +176,8 @@ class MockWindow extends MockElement
     @define 'navigator', -> new MockNavigator
     @define 'screen', -> new MockScreen
 
+  Date: MockDate
+
   pageXOffset: 0
   pageYOffset: 0
 
@@ -203,7 +216,7 @@ class MockWindow extends MockElement
     if interval = @intervals[index - 1]
       interval.cleared = true
 
-  tick: (ms, callback) ->
+  tick: (ms, callback, ehh) ->
     ms = Math.floor(ms)
 
     nextToRun = =>
@@ -235,6 +248,8 @@ class MockWindow extends MockElement
         fn()
 
     if current = nextToRun()
+      MockDate.add(current.runAt - @currentTime)
+
       asyncOrSync =>
         currentTime = @currentTime
         @currentTime = current.runAt
@@ -251,6 +266,8 @@ class MockWindow extends MockElement
         if tick >= 0
           @tick(tick, callback)
     else
+      MockDate.add(ms)
+
       @currentTime += ms
 
       if callback
@@ -271,6 +288,7 @@ api = {
   MockLocation
   MockNavigator
   MockScreen
+  MockDate
 }
 
 if module?

@@ -274,6 +274,44 @@ describe 'MockWindow', ->
       @window.tick 300, ->
         done() if aDone && bDone && cDone
 
+    it 'adds tick ms to current time', ->
+      before = (new @window.Date).getTime()
+      @window.tick(100)
+      after = (new @window.Date).getTime()
+      (after - before).should.equal(100)
+
+    it 'has correct time in callback', ->
+      D = @window.Date
+      orig = (new D).getTime()
+      @window.tick 3, ->
+        (new D().getTime() - orig).should.equal(3)
+
+    it 'does not modify clock when ticking zero', ->
+      orig = new @window.Date().getTime()
+      @window.tick(0)
+      (new @window.Date().getTime()).should.equal(orig)
+
+    it 'has a valid clock each time', ->
+      D = @window.Date
+
+      orig = (new @window.Date).getTime()
+
+      @window.setTimeout ->
+        now = (new D).getTime()
+        (now - orig).should.equal(100)
+      , 100
+
+      count = 0
+
+      @window.setInterval ->
+        now = (new D).getTime()
+        switch ++count
+          when 1 then (now - orig).should.equal(100)
+          when 2 then (now - orig).should.equal(200)
+      , 100
+
+      @window.tick(200)
+
   describe '#tickAsync', ->
     it 'is called async', (done) ->
       called = false

@@ -67,9 +67,9 @@
   MockScreen = (function() {
     function MockScreen() {}
 
-    MockScreen.prototype.width = 0;
+    MockScreen.prototype.width = 2560;
 
-    MockScreen.prototype.height = 0;
+    MockScreen.prototype.height = 1440;
 
     return MockScreen;
 
@@ -166,13 +166,17 @@
       };
     };
 
-    MockNode.prototype.scrollWidth = 0;
+    MockNode.prototype.scrollTop = 0;
 
-    MockNode.prototype.scrollHeight = 0;
+    MockNode.prototype.scrollLeft = 0;
 
-    MockNode.prototype.clientWidth = 0;
+    MockNode.prototype.scrollWidth = 1265;
 
-    MockNode.prototype.clientHeight = 0;
+    MockNode.prototype.scrollHeight = 2284;
+
+    MockNode.prototype.clientWidth = 1265;
+
+    MockNode.prototype.clientHeight = 2284;
 
     MockNode.prototype.setAttribute = function(name, value) {
       return this.attributes[name] = value;
@@ -288,6 +292,10 @@
     MockWindow.prototype.pageXOffset = 0;
 
     MockWindow.prototype.pageYOffset = 0;
+
+    MockWindow.prototype.innerWidth = 1280;
+
+    MockWindow.prototype.innerHeight = 1086;
 
     MockWindow.prototype.postMessage = function(data, origin) {
       return this.emit('message', {

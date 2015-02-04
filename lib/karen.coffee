@@ -19,7 +19,7 @@ class Evented
 class MockDate
   constructor: (args...) ->
     if args.length == 0
-      args = MockDate.__now.getTime()
+      args = [MockDate.__now.getTime()]
 
     return new (Function.prototype.bind.apply(Date, [null].concat(args)))
 

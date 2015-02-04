@@ -5,4 +5,4 @@ and node.
 
 ## Copyright
 
-© 2014 Burt AB, see LICENSE.txt (BSD 3-Clause).
+© 2014-2015 Burt AB, see LICENSE.txt (BSD 3-Clause).

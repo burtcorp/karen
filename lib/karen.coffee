@@ -216,7 +216,7 @@ class MockWindow extends MockElement
     if interval = @intervals[index - 1]
       interval.cleared = true
 
-  tick: (ms, callback, ehh) ->
+  tick: (ms, callback) ->
     ms = Math.floor(ms)
 
     nextToRun = =>

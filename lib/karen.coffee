@@ -125,11 +125,20 @@ class MockDocument extends MockNode
 
     cookies = {}
 
+    hasExpired = (name) =>
+      {expires} = cookies[name]
+
+      exp = (new @defaultView.Date(expires)).getTime()
+      now = (new @defaultView.Date()).getTime()
+
+      now - exp > 0
+
     @__defineGetter__ 'cookie', ->
       cookieString = []
 
-      for name, value of cookies
-        cookieString.push(name + '=' + value.value)
+      for name, {value, expires} of cookies
+        unless hasExpired(name)
+          cookieString.push(name + '=' + value)
 
       cookieString.join('; ')
 
@@ -145,7 +154,7 @@ class MockDocument extends MockNode
 
         cookies[key][optionName] = optionValue
 
-      @emit 'cookie', key, value, {path, domain} = cookies[key]
+      @emit 'cookie', key, value, {expires, path, domain} = cookies[key]
 
     @define 'defaultView', -> new MockWindow
     @define 'parentWindow', -> new MockWindow

@@ -1,8 +1,8 @@
 (function() {
   var Evented, MockDate, MockDocument, MockElement, MockLocation, MockNavigator, MockNode, MockScreen, MockWindow, api, key, value,
     __slice = [].slice,
-    __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty,
     __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   Evented = (function() {
@@ -46,8 +46,8 @@
     function MockDate() {
       var args;
       args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-      if (!(args.length > 0)) {
-        args = MockDate.__now.getTime();
+      if (args.length === 0) {
+        args = [MockDate.__now.getTime()];
       }
       return new (Function.prototype.bind.apply(Date, [null].concat(args)));
     }
@@ -98,8 +98,8 @@
   MockElement = (function(_super) {
     __extends(MockElement, _super);
 
-    function MockElement(type) {
-      this.type = type;
+    function MockElement(_at_type) {
+      this.type = _at_type;
       MockElement.__super__.constructor.call(this);
     }
 
@@ -220,20 +220,31 @@
     __extends(MockDocument, _super);
 
     function MockDocument() {
-      var cookies;
+      var cookies, hasExpired;
       MockDocument.__super__.constructor.call(this, 'document');
       cookies = {};
+      hasExpired = (function(_this) {
+        return function(name) {
+          var exp, expires, now;
+          expires = cookies[name].expires;
+          exp = (new _this.defaultView.Date(expires)).getTime();
+          now = (new _this.defaultView.Date()).getTime();
+          return now - exp > 0;
+        };
+      })(this);
       this.__defineGetter__('cookie', function() {
-        var cookieString, name, value;
+        var cookieString, expires, name, value, _ref;
         cookieString = [];
         for (name in cookies) {
-          value = cookies[name];
-          cookieString.push(name + '=' + value.value);
+          _ref = cookies[name], value = _ref.value, expires = _ref.expires;
+          if (!hasExpired(name)) {
+            cookieString.push(name + '=' + value);
+          }
         }
         return cookieString.join('; ');
       });
       this.__defineSetter__('cookie', function(value) {
-        var domain, key, keyValue, option, optionName, optionValue, options, path, _i, _len, _ref, _ref1, _ref2, _ref3;
+        var domain, expires, key, keyValue, option, optionName, optionValue, options, path, _i, _len, _ref, _ref1, _ref2, _ref3;
         _ref = value.split(';').map(function(part) {
           return part.trim();
         }), keyValue = _ref[0], options = 2 <= _ref.length ? __slice.call(_ref, 1) : [];
@@ -246,7 +257,7 @@
           _ref2 = option.split('='), optionName = _ref2[0], optionValue = _ref2[1];
           cookies[key][optionName] = optionValue;
         }
-        return this.emit('cookie', key, value, (_ref3 = cookies[key], path = _ref3.path, domain = _ref3.domain, _ref3));
+        return this.emit('cookie', key, value, (_ref3 = cookies[key], expires = _ref3.expires, path = _ref3.path, domain = _ref3.domain, _ref3));
       });
       this.define('defaultView', function() {
         return new MockWindow;
@@ -364,7 +375,7 @@
       }
     };
 
-    MockWindow.prototype.tick = function(ms, callback, ehh) {
+    MockWindow.prototype.tick = function(ms, callback) {
       var asyncOrSync, current, nextToRun;
       ms = Math.floor(ms);
       nextToRun = (function(_this) {

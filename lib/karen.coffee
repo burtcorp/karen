@@ -225,7 +225,7 @@ class MockWindow extends MockElement
     if interval = @intervals[index - 1]
       interval.cleared = true
 
-  tick: (ms, callback) ->
+  __tick: (ms, callback) ->
     ms = Math.floor(ms)
 
     nextToRun = =>
@@ -273,7 +273,7 @@ class MockWindow extends MockElement
         current.callback()
 
         if tick >= 0
-          @tick(tick, callback)
+          @__tick(tick, callback)
     else
       MockDate.add(ms)
 
@@ -282,8 +282,11 @@ class MockWindow extends MockElement
       if callback
         callback()
 
-  tickAsync: (ms, callback = ->) ->
-    @tick(ms, callback)
+  tickSync: (ms) ->
+    @__tick(ms)
+
+  tickAsync: (ms, callback) ->
+    @__tick(ms, callback)
 
   setImmediate: (callback, params...) ->
     setImmediate(callback, params...)

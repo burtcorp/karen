@@ -323,7 +323,7 @@ describe 'MockWindow', ->
       @window.tickAsync(50)
       expect(called).to.be.false
 
-    it 'is callbacks', (done) ->
+    it 'calls callback function', (done) ->
       fn = ->
       @window.setTimeout(fn, 100)
       @window.tickAsync(50, done)

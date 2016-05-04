@@ -351,3 +351,12 @@ describe 'MockWindow', ->
       expect(@window.document.documentElement.scrollTop).to.equal(200)
       expect(@window.document.body.scrollLeft).to.equal(100)
       expect(@window.document.body.scrollTop).to.equal(200)
+
+    it 'fires scroll event', (done) ->
+      @window.on 'scroll', (event) =>
+        expect(event.type).to.equal('scroll')
+        expect(@window.pageXOffset).to.equal(100)
+        expect(@window.pageYOffset).to.equal(200)
+        done()
+      @window.scrollTo(100, 200)
+

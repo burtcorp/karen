@@ -16,6 +16,9 @@ class Evented
     unless index == -1
       @listeners[event].splice(index, 1)
 
+class MockEvent
+  constructor: (@type) ->
+
 class MockDate
   constructor: (args...) ->
     if args.length == 0
@@ -197,6 +200,8 @@ class MockWindow extends MockElement
     @document.body.scrollLeft = x
     @document.body.scrollTop = y
 
+    @emit 'scroll', new MockEvent('scroll')
+
   pageXOffset: 0
   pageYOffset: 0
 
@@ -308,6 +313,7 @@ api = {
   MockNavigator
   MockScreen
   MockDate
+  MockEvent
 }
 
 if module?

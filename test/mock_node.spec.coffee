@@ -2,6 +2,7 @@
 
 describe 'MockNode', ->
   def 'node', -> new MockNode
+  def 'window', -> @node.ownerDocument.defaultView
 
   describe '#style', ->
     it 'allows for read/write styles', ->
@@ -50,8 +51,10 @@ describe 'MockNode', ->
         @boundingClientRect.width.should.equal(0)
 
     describe '#left', ->
-      it 'is zero by default', ->
-        @boundingClientRect.left.should.equal(0)
+      it 'is based on the window left scroll', ->
+        @node.getBoundingClientRect().left.should.equal(0)
+        @window.scrollTo(100, 0)
+        @node.getBoundingClientRect().left.should.equal(-100)
 
     describe '#bottom', ->
       it 'is zero by default', ->
@@ -62,8 +65,10 @@ describe 'MockNode', ->
         @boundingClientRect.right.should.equal(0)
 
     describe '#top', ->
-      it 'is zero by default', ->
-        @boundingClientRect.top.should.equal(0)
+      it 'is based on the window top scroll', ->
+        @node.getBoundingClientRect().top.should.equal(0)
+        @window.scrollTo(0, 100)
+        @node.getBoundingClientRect().top.should.equal(-100)
 
   describe '#scrollTop', ->
     it 'returns scroll top', ->

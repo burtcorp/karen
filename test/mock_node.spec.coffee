@@ -42,27 +42,27 @@ describe 'MockNode', ->
       @boundingClientRect = @node.getBoundingClientRect()
 
     describe '#height', ->
-      it 'returns node height', ->
+      it 'is zero by default', ->
         @boundingClientRect.height.should.equal(0)
 
     describe '#width', ->
-      it 'returns node width', ->
+      it 'is zero by default', ->
         @boundingClientRect.width.should.equal(0)
 
     describe '#left', ->
-      it 'returns node left', ->
+      it 'is zero by default', ->
         @boundingClientRect.left.should.equal(0)
 
     describe '#bottom', ->
-      it 'returns node bottom', ->
+      it 'is zero by default', ->
         @boundingClientRect.bottom.should.equal(0)
 
     describe '#right', ->
-      it 'returns node right', ->
+      it 'is zero by default', ->
         @boundingClientRect.right.should.equal(0)
 
     describe '#top', ->
-      it 'returns node top', ->
+      it 'is zero by default', ->
         @boundingClientRect.top.should.equal(0)
 
   describe '#scrollTop', ->

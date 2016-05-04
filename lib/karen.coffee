@@ -187,6 +187,16 @@ class MockWindow extends MockElement
 
   Date: MockDate
 
+  scrollTo: (x, y) ->
+    @pageXOffset = x
+    @pageYOffset = y
+
+    @document.documentElement.scrollLeft = x
+    @document.documentElement.scrollTop = y
+
+    @document.body.scrollLeft = x
+    @document.body.scrollTop = y
+
   pageXOffset: 0
   pageYOffset: 0
 

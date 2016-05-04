@@ -335,3 +335,19 @@ describe 'MockWindow', ->
         expect(bar).to.equal('bar')
         done()
       , 'foo', 'bar'
+
+  describe '#scrollTo', ->
+    it 'updates viewport positions', ->
+      @window.pageXOffset = 0
+      @window.pageYOffset = 0
+      @window.document.documentElement.scrollLeft = 0
+      @window.document.documentElement.scrollTop = 0
+      @window.document.body.scrollLeft = 0
+      @window.document.body.scrollTop = 0
+      @window.scrollTo(100, 200)
+      expect(@window.pageXOffset).to.equal(100)
+      expect(@window.pageYOffset).to.equal(200)
+      expect(@window.document.documentElement.scrollLeft).to.equal(100)
+      expect(@window.document.documentElement.scrollTop).to.equal(200)
+      expect(@window.document.body.scrollLeft).to.equal(100)
+      expect(@window.document.body.scrollTop).to.equal(200)

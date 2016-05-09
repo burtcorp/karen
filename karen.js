@@ -1,9 +1,9 @@
 (function() {
-  var Evented, MockDate, MockDocument, MockElement, MockLocation, MockNavigator, MockNode, MockScreen, MockWindow, api, key, value,
-    __slice = [].slice,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
-    __hasProp = {}.hasOwnProperty,
-    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+  var Evented, MockDate, MockDocument, MockElement, MockEvent, MockLocation, MockNavigator, MockNode, MockScreen, MockWindow, api, key, value,
+    slice = [].slice,
+    extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    hasProp = {}.hasOwnProperty,
+    indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 
   Evented = (function() {
     function Evented() {
@@ -11,23 +11,23 @@
     }
 
     Evented.prototype.on = function(event, listener) {
-      var _base;
-      if ((_base = this.listeners)[event] == null) {
-        _base[event] = [];
+      var base;
+      if ((base = this.listeners)[event] == null) {
+        base[event] = [];
       }
       return this.listeners[event].push(listener);
     };
 
     Evented.prototype.emit = function() {
-      var args, event, listener, _i, _len, _ref, _results;
-      event = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-      _ref = this.listeners[event] || [];
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        listener = _ref[_i];
-        _results.push(listener.apply(null, args));
+      var args, event, i, len, listener, ref, results;
+      event = arguments[0], args = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+      ref = this.listeners[event] || [];
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        listener = ref[i];
+        results.push(listener.apply(null, args));
       }
-      return _results;
+      return results;
     };
 
     Evented.prototype.remove = function(event, listener) {
@@ -42,10 +42,19 @@
 
   })();
 
+  MockEvent = (function() {
+    function MockEvent(type1) {
+      this.type = type1;
+    }
+
+    return MockEvent;
+
+  })();
+
   MockDate = (function() {
     function MockDate() {
       var args;
-      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
       if (args.length === 0) {
         args = [MockDate.__now.getTime()];
       }
@@ -95,11 +104,11 @@
 
   })();
 
-  MockElement = (function(_super) {
-    __extends(MockElement, _super);
+  MockElement = (function(superClass) {
+    extend(MockElement, superClass);
 
-    function MockElement(_at_type) {
-      this.type = _at_type;
+    function MockElement(type1) {
+      this.type = type1;
       MockElement.__super__.constructor.call(this);
     }
 
@@ -140,8 +149,8 @@
 
   })(Evented);
 
-  MockNode = (function(_super) {
-    __extends(MockNode, _super);
+  MockNode = (function(superClass) {
+    extend(MockNode, superClass);
 
     function MockNode(type) {
       MockNode.__super__.constructor.apply(this, arguments);
@@ -170,7 +179,7 @@
     };
 
     MockNode.prototype.removeChild = function(node) {
-      if (__indexOf.call(this.children, node) >= 0) {
+      if (indexOf.call(this.children, node) >= 0) {
         return this.emit('remove-child', node);
       }
     };
@@ -179,10 +188,10 @@
       return {
         height: 0,
         width: 0,
-        left: 0,
         bottom: 0,
         right: 0,
-        top: 0
+        left: -this.ownerDocument.defaultView.pageXOffset,
+        top: -this.ownerDocument.defaultView.pageYOffset
       };
     };
 
@@ -216,8 +225,8 @@
 
   })(MockElement);
 
-  MockDocument = (function(_super) {
-    __extends(MockDocument, _super);
+  MockDocument = (function(superClass) {
+    extend(MockDocument, superClass);
 
     function MockDocument() {
       var cookies, hasExpired;
@@ -233,10 +242,10 @@
         };
       })(this);
       this.__defineGetter__('cookie', function() {
-        var cookieString, expires, name, value, _ref;
+        var cookieString, expires, name, ref, value;
         cookieString = [];
         for (name in cookies) {
-          _ref = cookies[name], value = _ref.value, expires = _ref.expires;
+          ref = cookies[name], value = ref.value, expires = ref.expires;
           if (!hasExpired(name)) {
             cookieString.push(name + '=' + value);
           }
@@ -244,20 +253,20 @@
         return cookieString.join('; ');
       });
       this.__defineSetter__('cookie', function(value) {
-        var domain, expires, key, keyValue, option, optionName, optionValue, options, path, _i, _len, _ref, _ref1, _ref2, _ref3;
-        _ref = value.split(';').map(function(part) {
+        var domain, expires, i, key, keyValue, len, option, optionName, optionValue, options, path, ref, ref1, ref2, ref3;
+        ref = value.split(';').map(function(part) {
           return part.trim();
-        }), keyValue = _ref[0], options = 2 <= _ref.length ? __slice.call(_ref, 1) : [];
-        _ref1 = keyValue.split('='), key = _ref1[0], value = _ref1[1];
+        }), keyValue = ref[0], options = 2 <= ref.length ? slice.call(ref, 1) : [];
+        ref1 = keyValue.split('='), key = ref1[0], value = ref1[1];
         cookies[key] = {
           value: value
         };
-        for (_i = 0, _len = options.length; _i < _len; _i++) {
-          option = options[_i];
-          _ref2 = option.split('='), optionName = _ref2[0], optionValue = _ref2[1];
+        for (i = 0, len = options.length; i < len; i++) {
+          option = options[i];
+          ref2 = option.split('='), optionName = ref2[0], optionValue = ref2[1];
           cookies[key][optionName] = optionValue;
         }
-        return this.emit('cookie', key, value, (_ref3 = cookies[key], expires = _ref3.expires, path = _ref3.path, domain = _ref3.domain, _ref3));
+        return this.emit('cookie', key, value, (ref3 = cookies[key], expires = ref3.expires, path = ref3.path, domain = ref3.domain, ref3));
       });
       this.define('defaultView', function() {
         return new MockWindow;
@@ -288,8 +297,8 @@
 
   })(MockNode);
 
-  MockWindow = (function(_super) {
-    __extends(MockWindow, _super);
+  MockWindow = (function(superClass) {
+    extend(MockWindow, superClass);
 
     function MockWindow() {
       MockWindow.__super__.constructor.call(this, 'window');
@@ -301,8 +310,8 @@
         log: (function(_this) {
           return function() {
             var args;
-            args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-            return _this.emit.apply(_this, ['console-log'].concat(__slice.call(args)));
+            args = 1 <= arguments.length ? slice.call(arguments, 0) : [];
+            return _this.emit.apply(_this, ['console-log'].concat(slice.call(args)));
           };
         })(this)
       };
@@ -321,6 +330,16 @@
     }
 
     MockWindow.prototype.Date = MockDate;
+
+    MockWindow.prototype.scrollTo = function(x, y) {
+      this.pageXOffset = x;
+      this.pageYOffset = y;
+      this.document.documentElement.scrollLeft = x;
+      this.document.documentElement.scrollTop = y;
+      this.document.body.scrollLeft = x;
+      this.document.body.scrollTop = y;
+      return this.emit('scroll', new MockEvent('scroll'));
+    };
 
     MockWindow.prototype.pageXOffset = 0;
 
@@ -380,11 +399,11 @@
       ms = Math.floor(ms);
       nextToRun = (function(_this) {
         return function() {
-          var candidate, candidates, item, minItem, minValue, _i, _j, _len, _len1, _ref;
+          var candidate, candidates, i, item, j, len, len1, minItem, minValue, ref;
           candidates = [];
-          _ref = _this.timeouts.concat(_this.intervals);
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            item = _ref[_i];
+          ref = _this.timeouts.concat(_this.intervals);
+          for (i = 0, len = ref.length; i < len; i++) {
+            item = ref[i];
             if (_this.currentTime + ms < item.runAt) {
               continue;
             }
@@ -401,8 +420,8 @@
           }
           minItem = null;
           minValue = null;
-          for (_j = 0, _len1 = candidates.length; _j < _len1; _j++) {
-            candidate = candidates[_j];
+          for (j = 0, len1 = candidates.length; j < len1; j++) {
+            candidate = candidates[j];
             if (!(minItem && candidate.runAt >= minValue)) {
               minItem = candidate;
               minValue = candidate.runAt;
@@ -455,8 +474,8 @@
 
     MockWindow.prototype.setImmediate = function() {
       var callback, params;
-      callback = arguments[0], params = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
-      return setImmediate.apply(null, [callback].concat(__slice.call(params)));
+      callback = arguments[0], params = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+      return setImmediate.apply(null, [callback].concat(slice.call(params)));
     };
 
     return MockWindow;
@@ -472,7 +491,8 @@
     MockLocation: MockLocation,
     MockNavigator: MockNavigator,
     MockScreen: MockScreen,
-    MockDate: MockDate
+    MockDate: MockDate,
+    MockEvent: MockEvent
   };
 
   if (typeof module !== "undefined" && module !== null) {

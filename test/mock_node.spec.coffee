@@ -43,12 +43,12 @@ describe 'MockNode', ->
       @boundingClientRect = @node.getBoundingClientRect()
 
     describe '#height', ->
-      it 'is zero by default', ->
-        @boundingClientRect.height.should.equal(0)
+      it 'is 100 by default', ->
+        @boundingClientRect.height.should.equal(100)
 
     describe '#width', ->
-      it 'is zero by default', ->
-        @boundingClientRect.width.should.equal(0)
+      it 'is 100 by default', ->
+        @boundingClientRect.width.should.equal(100)
 
     describe '#left', ->
       it 'is based on the window left scroll', ->
@@ -57,12 +57,12 @@ describe 'MockNode', ->
         @node.getBoundingClientRect().left.should.equal(-100)
 
     describe '#bottom', ->
-      it 'is zero by default', ->
-        @boundingClientRect.bottom.should.equal(0)
+      it 'is not present by default', ->
+        expect(@boundingClientRect.bottom).to.be.undefined
 
     describe '#right', ->
-      it 'is zero by default', ->
-        @boundingClientRect.right.should.equal(0)
+      it 'is not present by default', ->
+        expect(@boundingClientRect.right).to.be.undefined
 
     describe '#top', ->
       it 'is based on the window top scroll', ->

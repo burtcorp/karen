@@ -186,10 +186,8 @@
 
     MockNode.prototype.getBoundingClientRect = function() {
       return {
-        height: 0,
-        width: 0,
-        bottom: 0,
-        right: 0,
+        height: 100,
+        width: 100,
         left: -this.ownerDocument.defaultView.pageXOffset,
         top: -this.ownerDocument.defaultView.pageYOffset
       };

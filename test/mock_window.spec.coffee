@@ -329,7 +329,7 @@ describe 'MockWindow', ->
       @window.tickAsync(50, done)
 
   describe '#setImmediate', ->
-    it 'callbacks', (done) ->
+    it 'callbacks on next event loop run', (done) ->
       @window.setImmediate (foo, bar) ->
         expect(foo).to.equal('foo')
         expect(bar).to.equal('bar')

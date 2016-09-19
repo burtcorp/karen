@@ -299,7 +299,7 @@ class MockWindow extends MockElement
     @tick(ms, callback)
 
   setImmediate: (callback, params...) ->
-    setImmediate(callback, params...)
+    callback(params...)
 
 api = {
   Evented

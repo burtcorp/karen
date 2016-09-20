@@ -473,7 +473,7 @@
     MockWindow.prototype.setImmediate = function() {
       var callback, params;
       callback = arguments[0], params = 2 <= arguments.length ? slice.call(arguments, 1) : [];
-      return setImmediate.apply(null, [callback].concat(slice.call(params)));
+      return callback.apply(null, params);
     };
 
     return MockWindow;

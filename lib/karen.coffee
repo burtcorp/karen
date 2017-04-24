@@ -83,11 +83,11 @@ class MockNode extends MockElement
       @contentWindow = new MockWindow
 
     @attributes = {}
+    @children = []
 
+    @__defineGetter__ 'childNodes', -> @children
     @define 'ownerDocument', -> new MockDocument
     @define 'parentNode', -> new MockNode
-
-    @children = []
 
   style: {}
 

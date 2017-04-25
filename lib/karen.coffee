@@ -124,9 +124,9 @@ class MockNode extends MockElement
   getElementsByTagName: (name) ->
     found = []
     for child in @children
-      if child.tagName.toLowerCase() == name.toLowerCase()
+      if child.tagName == name.toUpperCase()
         found.push(child)
-      if child.tagName.toLowerCase() != 'iframe'
+      if child.tagName != 'IFRAME'
         found.push(child.getElementsByTagName(name)...)
     found
 

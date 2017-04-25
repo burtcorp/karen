@@ -121,7 +121,14 @@ class MockNode extends MockElement
   getAttribute: (name) ->
     @attributes[name]
 
-  getElementsByTagName: -> []
+  getElementsByTagName: (name) ->
+    found = []
+    for child in @children
+      if child.tagName == name.toUpperCase()
+        found.push(child)
+      if child.tagName != 'IFRAME'
+        found.push(child.getElementsByTagName(name)...)
+    found
 
   insertBefore: (other) ->
 

@@ -109,8 +109,32 @@ describe 'MockNode', ->
       @node.parentNode.should.equal(@node.parentNode)
 
   describe '#getElementsByTagName', ->
-    it 'returns an empty array', ->
+    it 'returns an empty array when no children', ->
       @node.getElementsByTagName('div').should.eql([])
+
+    it 'returns a list of matching children', ->
+      div1 = new MockNode('DIV')
+      a1 = new MockNode('SPAN')
+      @node.appendChild(a1)
+      @node.appendChild(div1)
+      div2 = new MockNode('DIV')
+      div1.appendChild(div2)
+      res = @node.getElementsByTagName('div')
+      res.length.should.eq(2)
+      res[0].should.eq(div1)
+      res[1].should.eq(div2)
+
+    for [tagName, match] in [['span', 'SPAN'], ['span', 'span'], ['SPAN', 'span'], ['SPAN', 'SPAN']]
+      it 'returns matches where ' + tagName + ' == ' + match, ->
+        span = new MockNode(tagName)
+        @node.appendChild(span)
+        @node.getElementsByTagName(match).length.should.eq(1)
+
+    it 'does not traverse across iframes', ->
+      iframe = new MockNode('IFRAME')
+      @node.appendChild(iframe)
+      iframe.appendChild(new MockNode('SPAN'))
+      @node.getElementsByTagName('span').length.should.eq(0)
 
   describe '#insertBefore', ->
     it 'does nothing but exist', ->

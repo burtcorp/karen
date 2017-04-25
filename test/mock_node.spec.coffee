@@ -94,6 +94,13 @@ describe 'MockNode', ->
     it 'returns client height', ->
       @node.clientHeight.should.equal(2284)
 
+  describe '#childNodes', ->
+    it 'return its children', ->
+      child = new MockNode('DIV')
+      @node.appendChild(child)
+      @node.childNodes.length.should.eq(1)
+      @node.childNodes[0].should.eq(child)
+
   describe '#ownerDocument', ->
     it 'returns a MockDocument object', ->
       @node.ownerDocument.should.be.an('object')

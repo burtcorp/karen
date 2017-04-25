@@ -1,7 +1,7 @@
 {MockElement} = require('../lib/karen')
 
 describe 'MockElement', ->
-  def 'element', -> new MockElement('IMG')
+  def 'element', -> new MockElement('img')
 
   describe '#new', ->
     it 'sets tagName', ->

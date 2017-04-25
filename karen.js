@@ -110,6 +110,13 @@
     function MockElement(type1) {
       this.type = type1;
       MockElement.__super__.constructor.call(this);
+      this.__defineGetter__('tagName', function() {
+        if (this.type) {
+          return this.type.toUpperCase();
+        } else {
+          return void 0;
+        }
+      });
     }
 
     MockElement.prototype.define = function(name, callback) {
@@ -158,13 +165,16 @@
         this.contentWindow = new MockWindow;
       }
       this.attributes = {};
+      this.children = [];
+      this.__defineGetter__('childNodes', function() {
+        return this.children;
+      });
       this.define('ownerDocument', function() {
         return new MockDocument;
       });
       this.define('parentNode', function() {
         return new MockNode;
       });
-      this.children = [];
     }
 
     MockNode.prototype.style = {};
@@ -213,8 +223,20 @@
       return this.attributes[name];
     };
 
-    MockNode.prototype.getElementsByTagName = function() {
-      return [];
+    MockNode.prototype.getElementsByTagName = function(name) {
+      var child, found, i, len, ref;
+      found = [];
+      ref = this.children;
+      for (i = 0, len = ref.length; i < len; i++) {
+        child = ref[i];
+        if (child.tagName === name.toUpperCase()) {
+          found.push(child);
+        }
+        if (child.tagName !== 'IFRAME') {
+          found.push.apply(found, child.getElementsByTagName(name));
+        }
+      }
+      return found;
     };
 
     MockNode.prototype.insertBefore = function(other) {};

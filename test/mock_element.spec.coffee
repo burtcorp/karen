@@ -1,7 +1,14 @@
 {MockElement} = require('../lib/karen')
 
 describe 'MockElement', ->
-  def 'element', -> new MockElement
+  def 'element', -> new MockElement('img')
+
+  describe '#new', ->
+    it 'sets tagName', ->
+      @element.tagName.should.eq('IMG')
+
+    it 'returns undefined if no tag', ->
+      expect(new MockElement().tagName).to.eq(undefined)
 
   describe '#addEventListener', ->
     it 'callbacks on event', (done) ->

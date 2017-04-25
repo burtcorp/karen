@@ -45,6 +45,11 @@ class MockScreen
 class MockElement extends Evented
   constructor: (@type) ->
     super()
+    @__defineGetter__ 'tagName', ->
+      if @type
+        @type.toUpperCase()
+      else
+        undefined
 
   define: (name, callback) ->
     cache = @cache ?= {}
